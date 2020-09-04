@@ -48,7 +48,6 @@ def client_thread(connection, ip, port, max_buffer_size = 8120):
             connection.close()
             print("Connection " + ip + ":" + port + " closed")
             is_active = False         
-
         else:
             message_response = P2PmessageParser(client_input,ip)
             connection.sendall(message_response.encode("utf8"))
@@ -66,7 +65,6 @@ def make_peer_inactive(cookie):  # Makes peer inactive by setting flag as False
 
 def receive_input(connection, max_buffer_size):
     recvdMessage = connection.recv(max_buffer_size)
-
     decoded_input = recvdMessage.decode("utf8").rstrip()  
     result = str(decoded_input.upper())
     print(result)
@@ -93,7 +91,6 @@ def P2PmessageParser(input_message,ip): # Parses message received
              except:
                  continue
         response = "LEAVE OK P2P-DI/0.1\r\n"
-        # print(activepeerList)
         
     if(method == 'REGISTER'):
         line = messageLoc.split('RFCSERVERPORT: ')[1]
@@ -130,7 +127,6 @@ def P2PmessageParser(input_message,ip): # Parses message received
                      activepeerList[activeCount] = activePeer
                      activeCount += 1
         response = "PQUERY OK P2P-DI/0.1\r\nList: "+str(activepeerList)+"\r\n" 
-        # print(activepeerList)
    
     return response
     
